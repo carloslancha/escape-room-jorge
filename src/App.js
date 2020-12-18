@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { CircleFill, PlayFill, SquareFill } from 'react-bootstrap-icons';
+import { ArrowLeftRight, CircleFill, PlayFill, SquareFill } from 'react-bootstrap-icons';
 
 import {useRef, useState} from 'react';
 
@@ -31,6 +31,7 @@ function App() {
 	const [mode, setMode] = useState();
 	const [recordedAudio, setRecordedAudio] = useState();
 	const [result, setResult] = useState();
+	const [revertMode, setRevertMode] = useState();
 
 	const mediaRecorderRef = useRef();
 
@@ -69,10 +70,10 @@ function App() {
 
 		const form = event.target;
 
-		if (form.one.value === '1' && form.two.value === '2' && form.three.value === '3' && form.four.value === '4') {
+		if (!revertMode && form.one.value === '1' && form.two.value === '2' && form.three.value === '3' && form.four.value === '4') {
 			setMode(1);
 		}
-		else if (form.one.value === '4' && form.two.value === '3' && form.three.value === '2' && form.four.value === '1') {
+		else if (revertMode && form.one.value === '4' && form.two.value === '3' && form.three.value === '2' && form.four.value === '1') {
 			setMode(2);
 		}
 		else {
@@ -155,88 +156,105 @@ function App() {
 		}
 	}
 
+	const handleRevert = () => {
+		if (document.body.classList.contains('revert')) {
+			document.body.classList.remove('revert');
+		}
+		else {
+			document.body.classList.add('revert');
+		}
+
+		setRevertMode(!revertMode);
+	}
+
 	return (
-		<Container className="my-5">
-			{!mode && (
-				<Row className="justify-content-md-center">
-					<Col xs={12} sm={4} md={4} className="text-center">
-						<h2>Introduce la contraseña</h2>
-						<Form autoComplete="off" onChange={() => setLogInError(false)} onSubmit={handleLogin}>
-							<Form.Row>
-								<Form.Group as={Col}>
-									<Form.Control className="text-center" name="one" type="text" maxLength="1" />
-								</Form.Group>
+		<>
+			<Container className="py-5">
+				{!mode && (
+					<Row className="justify-content-md-center">
+						<Col xs={12} sm={4} md={4} className="text-center">
+							<h2>Introduce la contraseña</h2>
+							<Form autoComplete="off" onChange={() => setLogInError(false)} onSubmit={handleLogin}>
+								<Form.Row>
+									<Form.Group as={Col}>
+										<Form.Control className="text-center" name="one" type="text" maxLength="1" />
+									</Form.Group>
 
-								<Form.Group as={Col}>
-									<Form.Control className="text-center" name="two" type="text" maxLength="1" />
-								</Form.Group>
+									<Form.Group as={Col}>
+										<Form.Control className="text-center" name="two" type="text" maxLength="1" />
+									</Form.Group>
 
-								<Form.Group as={Col}>
-									<Form.Control className="text-center" name="three" type="text" maxLength="1" />
-								</Form.Group>
+									<Form.Group as={Col}>
+										<Form.Control className="text-center" name="three" type="text" maxLength="1" />
+									</Form.Group>
 
-								<Form.Group as={Col}>
-									<Form.Control className="text-center" name="four" type="text" maxLength="1" />
-								</Form.Group>
-							</Form.Row>
+									<Form.Group as={Col}>
+										<Form.Control className="text-center" name="four" type="text" maxLength="1" />
+									</Form.Group>
+								</Form.Row>
 
-							<p className="text-danger">
-								{logInError}
-							</p>
+								<p className="text-danger">
+									{logInError}
+								</p>
 
-							<Button variant="primary" type="submit">
-								Entrar
+								<Button variant="primary" type="submit">
+									Entrar
+								</Button>
+							</Form>
+						</Col>
+					</Row>
+				)}
+
+				{mode === 1 && (
+					<Row className="justify-content-md-center">
+						<Col xs={12} sm={4} md={4} className="text-center">
+							<h2>Decodificador xPress</h2>
+							<Form autoComplete="off" onSubmit={handleDecode}>
+								<Form.Row>
+									<Form.Group as={Col}>
+										<Form.Control className="text-center" name="input" type="text" />
+									</Form.Group>
+								</Form.Row>
+
+								<p>
+									{result}
+								</p>
+
+								<Button variant="primary" type="submit">
+									Decodificar
+								</Button>
+							</Form>
+						</Col>
+					</Row>
+				)}
+
+				{mode === 2 && (
+					<Row className="justify-content-md-center">
+						<Col xs={1} className="text-center">
+							{!isRecording ? (
+								<Button variant="danger" onClick={handleAudioRecord}>
+									<CircleFill />
+								</Button>
+								) : (
+								<Button variant="danger" onClick={handleAudioRecord}>
+									<SquareFill />
+								</Button>
+							)}
+						</Col>
+
+						<Col xs={1} className="text-center">
+							<Button variant={recordedAudio && !isPlayingAudio ? "success" : "secondary"} onClick={handleAudioPlay}>
+								<PlayFill />
 							</Button>
-						</Form>
-					</Col>
-				</Row>
-			)}
+						</Col>
+					</Row>
+				)}
+			</Container>
 
-			{mode === 1 && (
-				<Row className="justify-content-md-center">
-					<Col xs={12} sm={4} md={4} className="text-center">
-						<h2>Decodificador xPress</h2>
-						<Form autoComplete="off" onSubmit={handleDecode}>
-							<Form.Row>
-								<Form.Group as={Col}>
-									<Form.Control className="text-center" name="input" type="text" />
-								</Form.Group>
-							</Form.Row>
-
-							<p>
-								{result}
-							</p>
-
-							<Button variant="primary" type="submit">
-								Decodificar
-							</Button>
-						</Form>
-					</Col>
-				</Row>
-			)}
-
-			{mode === 2 && (
-				<Row className="justify-content-md-center">
-					<Col xs={1} className="text-center">
-						{!isRecording ? (
-							<Button variant="danger" onClick={handleAudioRecord}>
-								<CircleFill />
-							</Button>
-							) : (
-							<Button variant="danger" onClick={handleAudioRecord}>
-								<SquareFill />
-							</Button>
-						)}
-					</Col>
-
-					<Col xs={1} className="text-center">
-						<Button variant={recordedAudio && !isPlayingAudio ? "success" : "secondary"} onClick={handleAudioPlay}>
-							<PlayFill />
-						</Button>
-					</Col>
-				</Row>
-			)}
-		</Container>
+			<Button className="revert-button" variant="secondary" size="sm" onClick={handleRevert}>
+				<ArrowLeftRight />
+			</Button>
+		</>
 	);
 }
 

@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+.revert-button {
+  background-color: #e2e2e2;
+  border: none;
+  bottom: 10px;
+  right: 10px;
+  position: absolute;
+}
+
+.revert .revert-button {
+  left: 10px;
+  right: 0;
+}
+
+.revert {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
