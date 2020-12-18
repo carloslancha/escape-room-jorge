@@ -57,4 +57,9 @@
   transform: scaleX(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
+  background-color: black;
+}
+
+.revert .container h2, .revert .container p, .revert .container button {
+  filter: invert(1);
 }
