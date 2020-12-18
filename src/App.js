@@ -251,9 +251,11 @@ function App() {
 				)}
 			</Container>
 
-			<Button className="revert-button" variant="secondary" size="sm" onClick={handleRevert}>
-				<ArrowLeftRight />
-			</Button>
+			{!mode && (
+				<Button className="revert-button" variant="secondary" size="sm" onClick={handleRevert}>
+					<ArrowLeftRight />
+				</Button>
+			)}
 		</>
 	);
 }
