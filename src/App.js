@@ -252,7 +252,7 @@ function App() {
 			</Container>
 
 			{!mode && (
-				<Button className="revert-button" variant="secondary" size="sm" onClick={handleRevert}>
+				<Button className="revert-button" variant="secondary" size="sm" onClick={handleRevert} tabIndex="-1">
 					<ArrowLeftRight />
 				</Button>
 			)}
