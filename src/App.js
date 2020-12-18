@@ -73,7 +73,7 @@ function App() {
 		if (!revertMode && form.one.value === '1' && form.two.value === '2' && form.three.value === '3' && form.four.value === '4') {
 			setMode(1);
 		}
-		else if (revertMode && form.one.value === '4' && form.two.value === '3' && form.three.value === '2' && form.four.value === '1') {
+		else if (revertMode && form.one.value === '7' && form.two.value === '3' && form.three.value === '8' && form.four.value === '2') {
 			setMode(2);
 		}
 		else {
