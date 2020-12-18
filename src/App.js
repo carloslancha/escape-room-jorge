@@ -208,7 +208,7 @@ function App() {
 				{mode === 1 && (
 					<Row className="justify-content-md-center">
 						<Col xs={12} sm={4} md={4} className="text-center">
-							<h2>Decodificador xPress</h2>
+							<h2>Dcdr xPress</h2>
 							<Form autoComplete="off" onSubmit={handleDecode}>
 								<Form.Row>
 									<Form.Group as={Col}>
@@ -221,7 +221,7 @@ function App() {
 								</p>
 
 								<Button variant="primary" type="submit">
-									Decodificar
+									Enviar
 								</Button>
 							</Form>
 						</Col>
