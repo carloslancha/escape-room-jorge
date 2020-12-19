@@ -10,18 +10,18 @@ import {useRef, useState} from 'react';
 import './App.css';
 
 const codes = [
-	{
-		decodified: false,
-		word: 'Patata',
-	},
-	{
-		decodified: false,
-		word: 'Platano',
-	},
-	{
-		decodified: false,
-		word: 'Egregio',
-	},
+	'gata del haren',
+	'nunca lo apagas',
+	'contraseña',
+	'lo que nunca haces si no te lo dice krys',
+	'support adc',
+	'faccion pija',
+	'caballo de kosso',
+	'plato favorito de krys',
+	'johnny',
+	'acepcion muy larga solo para que te niegues a resolverla pero en resumen es una gata del haren',
+	'RKLMDDIPDGEX',
+	'R K L M D D I P D G E X',
 ];
 
 function App() {
@@ -40,8 +40,8 @@ function App() {
 
 		const inputCode = event.target.input.value.toLowerCase();
 
-		const result = codes.find((code) => {
-			code = code.word.toLowerCase();
+		let result = codes.find((code) => {
+			code = code.toLowerCase();
 
 			if (code.length !== inputCode.length) {
 				return false;
@@ -61,8 +61,12 @@ function App() {
 
 			return true;
 		});
+
+		if (result === 'RKLMDDIPDGEX' || result === 'R K L M D D I P D G E X') {
+			result = 'PIDRC';
+		}
 		
-		setResult(result ? result.word : 'No se han encontrado coincidencias');
+		setResult(result ? result : 'No se han encontrado coincidencias');
 	};
 
 	const handleLogin = (event) => {
